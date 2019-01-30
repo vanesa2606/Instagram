@@ -1,0 +1,82 @@
+#formularioRegistro{
+    margin-top: 90px;
+}
+#formularioConectate{
+    margin-top: 90px;
+}
+#formularioRegistro > form > input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-bottom-left-radius: 2em;
+    border-bottom-right-radius: 2em;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+}
+#formularioConectate > form > input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-bottom-left-radius: 2em;
+    border-bottom-right-radius: 2em;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+}
+#index{
+    padding: 10px;
+    float: left; 
+    width: 45%; 
+    text-align: justify;
+}
+#logo{
+    padding: 10px; 
+    float: right; 
+    width: 45%; 
+    text-align: justify;
+}
+
+#logo > .col > img{
+    text-align: center;
+}
+
+#botones > button{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #9900CC;
+    border-bottom-left-radius: 2em;
+    border-bottom-right-radius: 2em;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    margin-bottom: 70px;
+    margin-top: 20px;
+    color:white;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+
+#barrasuperior > nav > img{
+    margin-right: 900px;
+    margin-left: 50px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+#barrasuperior > nav > button, #barrasuperior > nav > #botonfoto{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: rgb(15, 187, 164);
+    border-bottom-left-radius: 2em;
+    border-bottom-right-radius: 2em;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    color:white;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+

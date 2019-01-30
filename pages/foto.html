@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ejercicio 1</title>
+        <script src="/js/libs/jquery-3.3.1.min.js"></script>
+        <script src="/js/libs/moment.min.js"></script>
+        <script type="text/javascript" src="/js/base.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/base.css">
+    </head>
+    <body>
+        <header id="barrasuperior">
+            <nav>
+                    <img src="https://www.edigitalagency.com.au/wp-content/uploads/new-instagram-logo-png-transparent-1200x1199.png" width="3%">
+                    <a id="botonfoto" href="foto">Subir foto</a>
+                    <button class="cerrarSesión">Cerrar sesión</button>
+            </nav>
+        </header>
+        <div>
+          
+        </div>
+      <div id="subirfotos">
+            <form action="http://localhost:8080/uploader" method="post" enctype="multipart/form-data">
+                    <input type="file" name="archivo">
+                    <br>
+                    Texto:<input type="texto" name="texto">
+                    <br>
+                    <input type="submit" value="Subir">
+                </form>
+
+      </div>
+    </body>
+</html>
