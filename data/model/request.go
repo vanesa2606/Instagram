@@ -13,3 +13,8 @@ type Login struct {
 	Username   string
 	Contrasena string
 }
+
+//Sesiones struct
+type Sesiones struct {
+	Gid string
+}

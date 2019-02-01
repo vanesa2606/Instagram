@@ -1,8 +1,12 @@
 $(document).ready(function() {
     console.log("Bienvenido a Instagram");
-    var formularioRegistro = $("#formularioRegistro > form > input:last-child");
+    var formularioRegistro = $("#formularioRegistro > input:last-child");
     console.log(formularioRegistro);
 
+    //La linea de abajo es para saber si me ha iniciado sesión y me ha creado una cookie
+    //console.log(document.cookie);
+
+    // Ajax para el regitro
     $(formularioRegistro).click(function() {
         var user = $("#nombre").val();
         var usernam = $("#username").val();
@@ -29,7 +33,8 @@ $(document).ready(function() {
 
         }).done(function(data) {
             console.log("Petición realizada");
-            $('#formularioRegistro > p').html('<strong>Su petición ha sido registrada con éxito</strong>');
+            $('#index > #botones > h1').html('Su petición ha sido registrada con éxito!!!');
+
         
         }).fail(function(data) {
             console.log("Petición fallida");
@@ -40,6 +45,47 @@ $(document).ready(function() {
     });
 
 
+    // Ajax para el login
+    var formularioConectate = $("#formularioConectate > input:last-child");
+    console.log(formularioConectate)
+    $(formularioConectate).click(function() {
+        var usernam = $("#usernamecone").val();
+        var password = $("#contrasenacone").val();
+        console.log(username, contrasena);
+        
+        var envio = {
+            username: usernam,
+            contrasena: password
+        };
+        console.log(envio);
+        $.post({
+            url:"/login",
+            data: JSON.stringify(envio),
+            method: "POST",
+            success: function(data, status, jqXHR) {
+                console.log(data);
+            },      
+            dataType: "json"
+
+
+        }).done(function(data) {
+            console.log("Petición realizada");
+            if (data == true){
+                window.location.href = "/principal";
+            }
+        
+        }).fail(function(data) {
+            console.log("Petición fallida");
+            console.log(data);
+
+        
+        }).always(function(data){
+            console.log("Petición completa");
+        });
+    });
+
+
+
     // Esto es el registro para que cuando pulses un boton se te muestre un formulario u otro
 
     $('#formularioConectate').hide();
@@ -47,14 +93,12 @@ $(document).ready(function() {
 
 
     $('.registrate').on ('click', function () {
-        console.log('click en el boton regisro');
         $('#formularioConectate').hide();
         $('#formularioRegistro').show();
         $('#botones').hide();
     })
 
     $('.conectate').on ('click', function () {
-        console.log('click en el boton regisro');
         $('#formularioConectate').show();
         $('#formularioRegistro').hide();
         $('#botones').hide();

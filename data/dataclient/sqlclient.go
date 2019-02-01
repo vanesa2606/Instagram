@@ -27,7 +27,7 @@ func Registro(objeto *model.Usuario) {
 }
 
 // Login test
-func Login(objeto *model.Login) []model.RLogin {
+func Login(objeto *model.Login) string {
 	db, err := sql.Open("mysql", "ubuntu:ubuntu@tcp(localhost:3306)/Instagram")
 
 	if err != nil {
@@ -43,16 +43,13 @@ func Login(objeto *model.Login) []model.RLogin {
 		panic(err.Error())
 	}
 	defer query.Close()
-
-	resultado := make([]model.RLogin, 0)
+	var resultado string
 	for query.Next() {
-		var user = model.RLogin{}
 
-		err = query.Scan(&user.Contrasena)
+		err := query.Scan(&resultado)
 		if err != nil {
 			panic(err.Error())
 		}
-		resultado = append(resultado, user)
 	}
 	return resultado
 }

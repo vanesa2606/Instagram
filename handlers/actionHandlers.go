@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"crypto/rand"
 	"encoding/json"
 	"fmt"
 	client "instagram/data/dataclient"
@@ -11,10 +12,15 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gorilla/securecookie"
 	"golang.org/x/crypto/bcrypt"
 )
 
-//Registro Función que inserta los idiomas en la base de datos local
+var cookieHandler = securecookie.New(
+	securecookie.GenerateRandomKey(64),
+	securecookie.GenerateRandomKey(32))
+
+//Registro Función que inserta los usuarios en la base de datos local
 func Registro(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Incoming request from " + r.URL.EscapedPath())
 	if r.URL.Path != PathRegistro {
@@ -62,9 +68,31 @@ func Registro(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintln(w, e)
 	}
+
 }
 
-//Login Función que hace el login de la pagina
+func tokenGenerator() string {
+	b := make([]byte, 4)
+	rand.Read(b)
+	return fmt.Sprintf("%x", b)
+
+}
+
+func setSession(userName string, response http.ResponseWriter) {
+	value := map[string]string{
+		"name": userName,
+	}
+	if encoded, err := cookieHandler.Encode("session", value); err == nil {
+		cookie := &http.Cookie{
+			Name:  "session",
+			Value: encoded,
+			Path:  "/",
+		}
+		http.SetCookie(response, cookie)
+	}
+}
+
+//Login Función para acceder a la página
 func Login(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Incoming request from " + r.URL.EscapedPath())
 	if r.URL.Path != PathLogin {
@@ -75,33 +103,44 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
+
 	defer r.Body.Close()
 	bytes, e := ioutil.ReadAll(r.Body)
 
+	respuesta := false
 	if e == nil {
+		// datos que recibe del cliente
 		var user model.Login
-		e = json.Unmarshal(bytes, &user)
+		enTexto := string(bytes)
+		fmt.Println("En texto: " + enTexto)
+		_ = json.Unmarshal(bytes, &user)
 
-		if e == nil {
-			lista := client.Login(&user)
+		fmt.Println(user.Username)
 
-			w.WriteHeader(http.StatusOK)
-
-			w.Header().Add("Content-Type", "application/json")
-
-			respuesta, _ := json.Marshal(&lista)
-			fmt.Fprint(w, string(respuesta))
-		} else {
+		if user.Username == "" || user.Contrasena == "" {
+			fmt.Fprintln(w, "La petición está vacía")
 			w.WriteHeader(http.StatusBadRequest)
-			fmt.Fprintln(w, "La petición no pudo ser parseada")
-			fmt.Fprintln(w, e.Error())
 			return
+		}
+		// Contraseña de la base de datos
+		password := client.Login(&user)
+
+		// Comprueba que las dos contraseñas sean iguales
+		if err := bcrypt.CompareHashAndPassword([]byte(password), []byte(user.Contrasena)); err != nil {
+			fmt.Printf("No Login")
+		} else {
+			respuesta = true
+			setSession(user.Username, w)
+			fmt.Println("Login")
+
 		}
 
 	} else {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintln(w, e)
+		fmt.Fprintln(w, respuesta)
 	}
+
+	fmt.Fprintln(w, respuesta)
 }
 
 //Uploader Función sube archivos
