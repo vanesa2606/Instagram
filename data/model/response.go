@@ -6,6 +6,13 @@ type RLogin struct {
 	Contrasena string
 }
 
+//RIdentificado struct
 type RIdentificado struct {
 	Identificado bool
+}
+
+//RFoto struct
+type RFoto struct {
+	URL   string
+	Texto string
 }

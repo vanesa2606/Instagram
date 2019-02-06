@@ -53,3 +53,122 @@ func Login(objeto *model.Login) string {
 	}
 	return resultado
 }
+
+//ConsultaID test
+func ConsultaID(username string) int {
+	db, err := sql.Open("mysql", "ubuntu:ubuntu@tcp(localhost:3306)/Instagram")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer db.Close()
+	comando := "SELECT ID FROM Usuario WHERE (Username = '" + username + "')"
+	fmt.Println(comando)
+	query, err := db.Query("SELECT ID FROM Usuario WHERE (Username = '" + username + "')")
+
+	if err != nil {
+		panic(err.Error())
+	}
+	defer query.Close()
+	var resultado int
+	for query.Next() {
+
+		err := query.Scan(&resultado)
+		if err != nil {
+			panic(err.Error())
+		}
+	}
+	return resultado
+}
+
+//SubirFoto test
+func SubirFoto(url string, texto string, id int) {
+	db, err := sql.Open("mysql", "ubuntu:ubuntu@tcp(localhost:3306)/Instagram")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer db.Close()
+	insert, err := db.Query("INSERT INTO Foto(Url, Texto, Usuario_ID) VALUES (?, ?, ?)", url, texto, id)
+	if err != nil {
+		panic(err.Error())
+	}
+	insert.Close()
+}
+
+//MostrarFoto test
+func MostrarFoto() []model.RFoto {
+	db, err := sql.Open("mysql", "ubuntu:ubuntu@tcp(localhost:3306)/Instagram")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer db.Close()
+	comando := "SELECT Url, Texto FROM Foto"
+	fmt.Println(comando)
+	query, err := db.Query("SELECT Url, Texto FROM Foto")
+
+	if err != nil {
+		panic(err.Error())
+	}
+	resultado := make([]model.RFoto, 0)
+	for query.Next() {
+		var foto = model.RFoto{}
+
+		err = query.Scan(&foto.URL, &foto.Texto)
+		if err != nil {
+			panic(err.Error())
+		}
+		resultado = append(resultado, foto)
+	}
+	return resultado
+}
+
+//FotoID test
+/*func FotoID(URL string) int {
+	db, err := sql.Open("mysql", "ubuntu:ubuntu@tcp(localhost:3306)/Instagram")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer db.Close()
+	comando := "SELECT ID FROM Foto WHERE (Url = '" + URL + "')"
+	fmt.Println(comando)
+	query, err := db.Query("SELECT ID FROM Foto WHERE (Url = '" + URL + "')")
+
+	if err != nil {
+		panic(err.Error())
+	}
+	defer query.Close()
+	var resultado int
+	for query.Next() {
+
+		err := query.Scan(&resultado)
+		if err != nil {
+			panic(err.Error())
+		}
+	}
+	return resultado
+}
+*/
+//Comentarios test
+/*func Comentarios(objeto model.Comentario) {
+	db, err := sql.Open("mysql", "ubuntu:ubuntu@tcp(localhost:3306)/Instagram")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	fmt.Println("nombre: ", objeto.Texto)
+
+	defer db.Close()
+	insert, err := db.Query("INSERT INTO Usuario(Texto, Foto_ID, Foto_Usuario_ID) VALUES (?, ?, ?)", objeto.Texto)
+	if err != nil {
+		panic(err.Error())
+	}
+	insert.Close()
+}*/

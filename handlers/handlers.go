@@ -23,8 +23,17 @@ const PathRegistro string = "/registro"
 //PathLogin Ruta de login de los usuarios
 const PathLogin string = "/login"
 
+//PathclearSession Ruta de login de los usuarios
+const PathclearSession string = "/logout"
+
 //PathUploader Ruta para subir archivos
 const PathUploader string = "/uploader"
+
+//PathListarFoto Ruta para subir archivos
+const PathListarFoto string = "/listarfoto"
+
+//PathComentario Ruta para subir archivos
+const PathComentario string = "/comentario"
 
 //PathjsonResponse Ruta de registro de los usuarios
 const PathjsonResponse string = "/jsonResponse"
@@ -44,6 +53,9 @@ func init() {
 	Manejadores[PathCSSFiles] = CssFile
 	Manejadores[PathRegistro] = Registro
 	Manejadores[PathLogin] = Login
+	Manejadores[PathclearSession] = Logout
 	Manejadores[PathUploader] = Uploader
+	Manejadores[PathListarFoto] = ListarFoto
+	//Manejadores[PathComentario] = Comentario
 
 }

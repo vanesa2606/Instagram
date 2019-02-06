@@ -14,7 +14,7 @@ type Login struct {
 	Contrasena string
 }
 
-//Sesiones struct
-type Sesiones struct {
-	Gid string
+//Comentario struct
+type Comentario struct {
+	Texto string
 }
