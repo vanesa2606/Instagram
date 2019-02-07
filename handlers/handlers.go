@@ -32,6 +32,9 @@ const PathUploader string = "/uploader"
 //PathListarFoto Ruta para subir archivos
 const PathListarFoto string = "/listarfoto"
 
+//PathListarComentario Ruta para subir archivos
+const PathListarComentario string = "/listarcomentario"
+
 //PathComentario Ruta para subir archivos
 const PathComentario string = "/comentario"
 
@@ -56,6 +59,7 @@ func init() {
 	Manejadores[PathclearSession] = Logout
 	Manejadores[PathUploader] = Uploader
 	Manejadores[PathListarFoto] = ListarFoto
-	//Manejadores[PathComentario] = Comentario
+	Manejadores[PathListarComentario] = ListarComentario
+	Manejadores[PathComentario] = Comentario
 
 }

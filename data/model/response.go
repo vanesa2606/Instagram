@@ -13,6 +13,13 @@ type RIdentificado struct {
 
 //RFoto struct
 type RFoto struct {
+	ID    string
 	URL   string
 	Texto string
+}
+
+//RComentario struct
+type RComentario struct {
+	Texto  string
+	IDFoto string
 }

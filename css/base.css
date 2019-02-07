@@ -84,40 +84,59 @@
     display: none;
 }
 
-#publicaciones > .card {
-/* Agrega sombras para crear el efecto "tarjeta" */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-  }
+BODY { 
+    font: 8pt Verdana, Geneva, Arial, Helvetica, sans-serif; 
+    margin: 10 0 10 0px; 
+    text-align: center; 
+    background-color: #ebebeb; 
+ } 
+ #contenedor{ 
+    text-align: left; 
+    width: 770px; 
+    margin: auto; 
+ } 
+ #cabecera{ 
+    background-color: #d0d0ff; 
+    color: #333300; 
+    font-size:12pt; 
+    font-weight: bold; 
+    padding: 3 3 3 10px; 
+ } 
+ #cabecera > h1{
+     text-align: center;
+     color: rgb(15, 187, 164);
+ }
+ #cuerpo{ 
+    margin: 10 0 10 0px; 
+ } 
+ #principal{ 
+    margin-left: 20px; 
+    background-color: #ffffff; 
+    padding: 4 4 4 4px; 
+ } 
+ #pie{ 
+    background-color: #cccccc; 
+    padding: 3 10 3 10px; 
+    text-align:right; 
+ }
 
-  #publicaciones > .card > form{
-      padding-bottom: 70px;
-  }
+ #lateral{ 
 
-  
-/* Al pasar el mouse, agrega una sombra más profunda */
- #publicaciones >  .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  }
-  
-/* Añadir un poco de relleno dentro del contenedor de la tarjeta*/
-#publicaciones > .card > .container {
-    padding: 2px 16px;
-  }
+    background-color: #999999; 
+    float:right; 
+ } 
+ #principal{ 
+    background-color: #ffffff; 
+    padding: 4 4 4 4px; 
+ }
 
-/* Agregue esquinas redondeadas en la parte superior izquierda y en la esquina superior derecha de la imagen */
-#publicaciones > .card > img{
-    border-radius: 5px 5px 0 0;
-
-    margin-top:10px;
-    margin-left:10px;
-    margin-right:10px;
-    margin-bottom:10px;
-}
-
-#publicaciones > .container > p{  
-    margin-top:10px;
-    margin-left:10px;
-    margin-right:10px;
-    margin-bottom:10px;
-}
+ BODY { 
+    font: 8pt Verdana, Geneva, Arial, Helvetica, sans-serif; 
+    margin: 10 10 10 10px; 
+    text-align: center; 
+    background-color: #ebebeb; 
+ } 
+ #contenedor{ 
+    text-align: left; 
+    margin: auto; 
+ }

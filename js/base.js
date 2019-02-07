@@ -5,7 +5,11 @@ $(document).ready(function() {
 
     //La linea de abajo es para saber si me ha iniciado sesión y me ha creado una cookie
     console.log(document.cookie);
+
+    // LLamo a la funcion de listar fotos
     MostrarFotosssss();
+
+    
     // Ajax para el regitro
     $(formularioRegistro).click(function() {
         var user = $("#nombre").val();
@@ -108,41 +112,45 @@ $(document).ready(function() {
         $('#botones').hide();
     })
 
-    // Comentarios
-    var botonComen = $("#publicaciones .btnEnviarCom");
-    console.log("boton de envio", botonComen);
-    $(botonComen).click(function() {
-        var comentario = $(this).parent().children().children().find(".txtComentario").val();
-        console.log("Has pulsado el botón del envio de comentario", comentario);
-        
-       /* var envio = {
-            palabra: texto
+
+    // Añadir los comentarios 
+    $('#publicaciones').on('click', '.btnEnviarCom', function() {
+        console.log(this);
+        var comentario = $(this).parent().find(".txtComentario").val();
+        var id = $(this).parent().parent().parent().find(".txtId").val();
+        console.log(comentario, id);
+        var envio = {
+            texto: comentario,
+            id: id
         };
 
         $.post({
-            url:"/",
+            url:"/comentario",
             data: JSON.stringify(envio),
             success: function(data, status, jqXHR) {
                 console.log(data);
                 $("#txtTexto").val('')
+                $('#txtId').val('')
             },
             dataType: "json"
 
         }).done(function(data) {
             console.log("Petición realizada");
-            ActualizarHistorial();
         
         }).fail(function(data) {
             console.log("Petición fallida");
         
         }).always(function(data){
             console.log("Petición completa");
-        });*/
-    });
+        });
 
+    });
+    
+        
+       
 });
 
- // Imprimir todas las fotos por pantalla 
+ //Imprimir todas las fotos por pantalla 
 
  function MostrarFotosssss() {
     $.ajax({
@@ -161,25 +169,72 @@ $(document).ready(function() {
 }
 
 function Fotos(array) {
-var tbody = $("#publicaciones");
-tbody.children().remove();
-    if(array != null && array.length > 0) {
+    var tbody = $("#publicaciones");
+    tbody.children().remove();
+        if(array != null && array.length > 0) {
 
-        for(var x = 0; x < array.length; x++) {
-            tbody.append(
-                "<div class='card'>"+
-                    "<img src='/files/"+array[x].URL+"' width='15%'>"+
-                    "<div class='container'>"+
-                        "<p>"+ array[x].Texto + "</p>"+
-                    "</div>"+
-                        "<input type='comentario' class='txtComentario'>",
-                        "<input type='button' class='btnEnviarCom' value='Enviar'>",
-                "</div>");
+            for(var x = 0; x < array.length; x++) {
+                tbody.append(
+                    "<input type='hidden' class='txtId' value="+array[x].ID+">"+
+                    "<div class='card'>"+
+                        "<img src='/files/"+array[x].URL+"' width='30%'>"+
+                        "<div class='container'>"+
+                            "<h3>"+ array[x].Texto + "</h3>"+
+                        "</div>"+
+                        "<div class='comentarios'>"+
+                        "</div>"+
+                            "<input type='comentario' class='txtComentario'>"+
+                            "<input type='button' class='btnEnviarCom' value='Enviar'>"+
+                    "</div>");
+                    // Llamo a la función de mostrar comentarios
+
+                    MostrarComentarios();
+
+            }
+        } else {
+            tbody.append('<tr><td colspan="3">No hay publicaciones que mostar</td></tr>');
+            
         }
-    } else {
-        tbody.append('<tr><td colspan="3">No hay registros de hoy</td></tr>');
-        
-    }
 }
+
+
+ // Imprimir todas los comentarios por pantalla 
+
+ function MostrarComentarios() {
+    $.ajax({
+        url: "/listarcomentario",
+        method: "POST",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(data) {
+        Comentario(data); 
+        console.log(data);
+        },
+        error: function(data) {
+            console.log(data);
+        }
+    });
+}
+
+function Comentario(array) {
+    var id = $("#publicaciones .txtId");
+    var div = $("#publicaciones .comentarios");
+    div.children().remove();
+        if(array != null && array.length > 0) {
+
+            for(var x = 0; x < array.length; x++) {
+                div.append(
+                    "<input type='hidden' class='txtId' value="+array[x].ID+">"+
+                        "<div class='container'>"+
+                           // "<h6>"+ array[x].username + "</h6>"+
+                            "<p>"+ array[x].Texto + "</p>"+
+                        "</div>");
+            }
+        } else {
+            tbody.append('<tr><td colspan="3">No hay publicaciones que mostar</td></tr>');
+            
+        }
+}
+
 
 

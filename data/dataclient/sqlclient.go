@@ -107,9 +107,9 @@ func MostrarFoto() []model.RFoto {
 	}
 
 	defer db.Close()
-	comando := "SELECT Url, Texto FROM Foto"
+	comando := "SELECT ID, Url, Texto FROM Foto"
 	fmt.Println(comando)
-	query, err := db.Query("SELECT Url, Texto FROM Foto")
+	query, err := db.Query("SELECT ID, Url, Texto FROM Foto")
 
 	if err != nil {
 		panic(err.Error())
@@ -118,7 +118,7 @@ func MostrarFoto() []model.RFoto {
 	for query.Next() {
 		var foto = model.RFoto{}
 
-		err = query.Scan(&foto.URL, &foto.Texto)
+		err = query.Scan(&foto.ID, &foto.URL, &foto.Texto)
 		if err != nil {
 			panic(err.Error())
 		}
@@ -127,8 +127,24 @@ func MostrarFoto() []model.RFoto {
 	return resultado
 }
 
-//FotoID test
-/*func FotoID(URL string) int {
+//Comentario test
+func Comentario(objeto model.Comentario, ID int) {
+	db, err := sql.Open("mysql", "ubuntu:ubuntu@tcp(localhost:3306)/Instagram")
+	if err != nil {
+		panic(err.Error())
+	}
+	fmt.Println("id: ", ID)
+	fmt.Println("nombre: ", objeto.Texto, "FotoID: ", objeto.ID, "Usuario: ", ID)
+	defer db.Close()
+	insert, err := db.Query("INSERT INTO Comentario(Texto, Foto_ID, Foto_Usuario_ID) VALUES (?, ?, ?)", objeto.Texto, objeto.ID, ID)
+	if err != nil {
+		panic(err.Error())
+	}
+	insert.Close()
+}
+
+//ConsultaUsuario test
+func ConsultaUsuario(ID string) string {
 	db, err := sql.Open("mysql", "ubuntu:ubuntu@tcp(localhost:3306)/Instagram")
 
 	if err != nil {
@@ -136,15 +152,15 @@ func MostrarFoto() []model.RFoto {
 	}
 
 	defer db.Close()
-	comando := "SELECT ID FROM Foto WHERE (Url = '" + URL + "')"
+	comando := "SELECT Usuario FROM Usuario WHERE (ID = '" + ID + "')"
 	fmt.Println(comando)
-	query, err := db.Query("SELECT ID FROM Foto WHERE (Url = '" + URL + "')")
+	query, err := db.Query("SELECT Usuario FROM Usuario WHERE (ID = '" + ID + "')")
 
 	if err != nil {
 		panic(err.Error())
 	}
 	defer query.Close()
-	var resultado int
+	var resultado string
 	for query.Next() {
 
 		err := query.Scan(&resultado)
@@ -154,21 +170,32 @@ func MostrarFoto() []model.RFoto {
 	}
 	return resultado
 }
-*/
-//Comentarios test
-/*func Comentarios(objeto model.Comentario) {
+
+//MostrarComentario test
+func MostrarComentario() []model.RComentario {
 	db, err := sql.Open("mysql", "ubuntu:ubuntu@tcp(localhost:3306)/Instagram")
 
 	if err != nil {
 		panic(err.Error())
 	}
 
-	fmt.Println("nombre: ", objeto.Texto)
-
 	defer db.Close()
-	insert, err := db.Query("INSERT INTO Usuario(Texto, Foto_ID, Foto_Usuario_ID) VALUES (?, ?, ?)", objeto.Texto)
+	comando := "SELECT Texto, Foto_ID FROM Comentario"
+	fmt.Println(comando)
+	query, err := db.Query("SELECT Texto, Foto_ID FROM Comentario")
+
 	if err != nil {
 		panic(err.Error())
 	}
-	insert.Close()
-}*/
+	resultado := make([]model.RComentario, 0)
+	for query.Next() {
+		var comentario = model.RComentario{}
+
+		err = query.Scan(&comentario.Texto, &comentario.IDFoto)
+		if err != nil {
+			panic(err.Error())
+		}
+		resultado = append(resultado, comentario)
+	}
+	return resultado
+}

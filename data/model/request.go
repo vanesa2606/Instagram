@@ -17,4 +17,5 @@ type Login struct {
 //Comentario struct
 type Comentario struct {
 	Texto string
+	ID    string
 }

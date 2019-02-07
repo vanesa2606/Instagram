@@ -195,6 +195,8 @@ func Uploader(w http.ResponseWriter, r *http.Request) {
 
 	//Coger el texto del formulario y merterlo en una variable
 	texto := r.FormValue("texto")
+
+	//Coge la funcion getUserName para coger el nombre de usuario
 	username := getUserName(r)
 
 	fmt.Println(texto, "Nombre Usuario: ", username)
@@ -248,7 +250,7 @@ func ListarFoto(w http.ResponseWriter, r *http.Request) {
 }
 
 //Comentario Función parra guardar los comentarios en la base de datos
-/*func Comentario(w http.ResponseWriter, r *http.Request) {
+func Comentario(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Incoming request from " + r.URL.EscapedPath())
 	if r.URL.Path != PathComentario {
 		http.NotFound(w, r)
@@ -265,9 +267,9 @@ func ListarFoto(w http.ResponseWriter, r *http.Request) {
 	if e == nil {
 		var comentario model.Comentario
 		enTexto := string(bytes)
+
 		fmt.Println("En texto: " + enTexto)
 		_ = json.Unmarshal(bytes, &comentario)
-
 		fmt.Println(comentario.Texto)
 
 		if comentario.Texto == "" {
@@ -276,25 +278,46 @@ func ListarFoto(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		w.WriteHeader(http.StatusOK)
-
-		w.Header().Add("Content-Type", "application/json")
-
-		respuesta, _ := json.Marshal(comentario)
-		fmt.Fprint(w, string(respuesta))
-
-		//Id del usuario
+		//Funcion para coger el username
 		username := getUserName(r)
-		fmt.Println("Nombre Usuario: ", username)
+		//Datos de la base de datos que compara el username y me da el id de ese username
 		id := client.ConsultaID(username)
+		fmt.Println("IDUsuario: ", id)
 
-		//Id de la foto
+		go client.Comentario(comentario, id)
 
-
-		go client.Comentarios(&comentario)
 	} else {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintln(w, e)
 	}
 
-}*/
+}
+
+//ListarComentario Función que devuelve las peticiones de la base de datos dado un filtro
+func ListarComentario(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Incoming request from " + r.URL.EscapedPath())
+	if r.URL.Path != PathListarComentario {
+		http.NotFound(w, r)
+		return
+	}
+	if r.Method != http.MethodPost {
+		http.NotFound(w, r)
+		return
+	}
+
+	//Funcion para coger el username
+	//username := getUserName(r)
+	//Datos de la base de datos que comparar el id y me da el nombre de ese id
+	//username = client.ConsultaUsuario(username)
+	//fmt.Println("NombreUsuario: ", username)
+
+	//Cogemos los datos de la base de datos
+	lista := client.MostrarComentario()
+
+	//Con estas tres lineas lo convierte a json para enviarlo al cliente
+	w.WriteHeader(http.StatusOK)
+	w.Header().Add("Content-Type", "application/json")
+	respuesta, _ := json.Marshal(&lista)
+
+	fmt.Fprint(w, string(respuesta))
+}
