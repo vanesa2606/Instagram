@@ -20,6 +20,8 @@ type RFoto struct {
 
 //RComentario struct
 type RComentario struct {
-	Texto  string
-	IDFoto string
+	Texto     string
+	IDFoto    string
+	IDUsuario string
+	Username  string
 }

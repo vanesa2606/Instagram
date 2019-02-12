@@ -1,10 +1,23 @@
 #formularioRegistro{
-    margin-top: 90px;
+    margin-top: 60px;
+    text-align: center;
 }
+
+#formularioRegistro > p, #formularioConectate > p{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#formularioRegistro > input, #formularioConectate > input{
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
 #formularioConectate{
-    margin-top: 90px;
+    margin-top: 100px;
+    text-align: center;
 }
-#formularioRegistro > input{
+#formularioRegistro > input, #formularioConectate > input{
     margin-top: 10px;
     margin-bottom: 10px;
     border-bottom-left-radius: 2em;
@@ -12,14 +25,7 @@
     border-top-left-radius: 2em;
     border-top-right-radius: 2em;
 }
-#formularioConectate > input{
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border-bottom-left-radius: 2em;
-    border-bottom-right-radius: 2em;
-    border-top-left-radius: 2em;
-    border-top-right-radius: 2em;
-}
+
 #index{
     padding: 10px;
     float: left; 
@@ -37,10 +43,14 @@
     text-align: center;
 }
 
-#botones > button{
+#botones{
+    padding-top: 70px;
+    text-align: center;
+}
+#botones > button, #formularioRegistro > .conectate, #conectar, #registro, #botones > a{
     margin-top: 20px;
     margin-bottom: 20px;
-    background-color: #9900CC;
+    background-color: #dfba61;
     border-bottom-left-radius: 2em;
     border-bottom-right-radius: 2em;
     border-top-left-radius: 2em;
@@ -56,17 +66,24 @@
 }
 
 
+#barrasuperior{
+    background-color: #e9d097;
+    top: 0; /* Posicionamos la cabecera pegada arriba */
+    position: fixed; /* Hacemos que la cabecera tenga una posición fija */
+    padding-left: 20px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
 #barrasuperior > nav > img{
-    margin-right: 900px;
-    margin-left: 50px;
+    margin-right: 750px;
     margin-top: 5px;
     text-align: center;
 }
 
 #barrasuperior > nav > button, #barrasuperior > nav > #botonfoto{
-    margin-top: 20px;
     margin-bottom: 20px;
-    background-color: rgb(15, 187, 164);
+    background-color: #dfba61;
     border-bottom-left-radius: 2em;
     border-bottom-right-radius: 2em;
     border-top-left-radius: 2em;
@@ -84,59 +101,160 @@
     display: none;
 }
 
+
 BODY { 
-    font: 8pt Verdana, Geneva, Arial, Helvetica, sans-serif; 
-    margin: 10 0 10 0px; 
     text-align: center; 
-    background-color: #ebebeb; 
+    background-image: url("https://files.slack.com/files-pri/TFA3WCUC9-FG1P59ZEK/imagenfondo.jpg");
+    font: 8pt Verdana, Geneva, Arial, Helvetica, sans-serif; 
  } 
  #contenedor{ 
     text-align: left; 
     width: 770px; 
     margin: auto; 
+    padding-top: 120px;
  } 
  #cabecera{ 
-    background-color: #d0d0ff; 
-    color: #333300; 
+    background-color: #dfba61;  
     font-size:12pt; 
     font-weight: bold; 
-    padding: 3 3 3 10px; 
+    padding-left: 80px;
  } 
  #cabecera > h1{
      text-align: center;
-     color: rgb(15, 187, 164);
+     color: #76b4a9;
  }
- #cuerpo{ 
-    margin: 10 0 10 0px; 
- } 
  #principal{ 
     margin-left: 20px; 
-    background-color: #ffffff; 
+    background-image: url("https://files.slack.com/files-pri/TFA3WCUC9-FG1P59ZEK/imagenfondo.jpg");; 
     padding: 4 4 4 4px; 
  } 
  #pie{ 
-    background-color: #cccccc; 
-    padding: 3 10 3 10px; 
+    background-color: #e9d097; 
     text-align:right; 
  }
 
- #lateral{ 
-
-    background-color: #999999; 
-    float:right; 
- } 
- #principal{ 
-    background-color: #ffffff; 
-    padding: 4 4 4 4px; 
+ #publicaciones > .card{
+     margin-bottom: 40px;
+     margin-top: 30px;
+     background-color: #e9d097; 
+     column-count: 2;
  }
 
- BODY { 
-    font: 8pt Verdana, Geneva, Arial, Helvetica, sans-serif; 
-    margin: 10 10 10 10px; 
-    text-align: center; 
-    background-color: #ebebeb; 
- } 
- #contenedor{ 
-    text-align: left; 
-    margin: auto; 
- }
+ #publicaciones > .card img{
+    margin-left: 25px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+#publicaciones > .card > .container > h3{
+    text-align: center;
+    font-size: 20px;
+    padding-top: 25px;
+    margin-right: 25px;
+    margin-bottom: 25px;
+}
+
+#publicaciones > .card > .comentarios{
+    width: 300px;
+    height: 200px;
+    overflow: overlay; /* mostrando barras de desplazamiento */
+    background-color: #f0e2bd; 
+    margin-left: 30px;
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+} /* esto apunta a la barra de desplazamiento por defecto (obligatorio) */
+
+::-webkit-scrollbar-track {
+    background-color: #76b5aa;
+} /* La nueva barra de desplazamiento tendrá una apariencia plana con el color de fondo establecido. */
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2); 
+} /* Esto le dará estilo al pulgar, ignorando la pista. */
+
+::-webkit-scrollbar-button {
+    background-color: #94a6b4;
+} /* opcionalmente, puede aplicar estilo a los botones superior e inferior (izquierda y derecha para barras horizontales) */
+
+
+#publicaciones > .card > .comentarios p{
+    margin-left: 25px;
+    font-size:10px;
+}
+
+#publicaciones > .card > .comentarios h6{
+    margin-left: 25px;
+    font-size:10px;
+}
+
+#publicaciones > .card > .btnEnviarCom{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #dfba61;
+    border-bottom-left-radius: 2em;
+    border-bottom-right-radius: 2em;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    color:white;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+#publicaciones > .card > .txtComentario{
+    border-bottom-left-radius: 2em;
+    border-bottom-right-radius: 2em;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-left: 30px;
+}
+
+#subirfotos{
+    margin-top: 150px;
+}
+
+
+#subirfotos > form > p{
+    font-size: 20px;
+    font-weight: bold;
+    color:#364e62;
+    margin-top:50px;
+}
+
+#subirfotos > form > input.botonsubirfoto{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #dfba61;
+    border-bottom-left-radius: 2em;
+    border-bottom-right-radius: 2em;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    color:#364e62;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+#subirfotos > form > input.textofoto{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom-left-radius: 2em;
+    border-bottom-right-radius: 2em;
+    border-top-left-radius: 2em;
+    border-top-right-radius: 2em;
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+}

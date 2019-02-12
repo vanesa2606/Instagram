@@ -64,6 +64,7 @@ func ConsultaID(username string) int {
 
 	defer db.Close()
 	comando := "SELECT ID FROM Usuario WHERE (Username = '" + username + "')"
+
 	fmt.Println(comando)
 	query, err := db.Query("SELECT ID FROM Usuario WHERE (Username = '" + username + "')")
 
@@ -143,34 +144,6 @@ func Comentario(objeto model.Comentario, ID int) {
 	insert.Close()
 }
 
-//ConsultaUsuario test
-func ConsultaUsuario(ID string) string {
-	db, err := sql.Open("mysql", "ubuntu:ubuntu@tcp(localhost:3306)/Instagram")
-
-	if err != nil {
-		panic(err.Error())
-	}
-
-	defer db.Close()
-	comando := "SELECT Usuario FROM Usuario WHERE (ID = '" + ID + "')"
-	fmt.Println(comando)
-	query, err := db.Query("SELECT Usuario FROM Usuario WHERE (ID = '" + ID + "')")
-
-	if err != nil {
-		panic(err.Error())
-	}
-	defer query.Close()
-	var resultado string
-	for query.Next() {
-
-		err := query.Scan(&resultado)
-		if err != nil {
-			panic(err.Error())
-		}
-	}
-	return resultado
-}
-
 //MostrarComentario test
 func MostrarComentario() []model.RComentario {
 	db, err := sql.Open("mysql", "ubuntu:ubuntu@tcp(localhost:3306)/Instagram")
@@ -180,9 +153,9 @@ func MostrarComentario() []model.RComentario {
 	}
 
 	defer db.Close()
-	comando := "SELECT Texto, Foto_ID FROM Comentario"
+	comando := "SELECT Texto, Foto_ID, Foto_Usuario_ID, Username FROM Comentario c INNER JOIN Usuario u ON c.Foto_Usuario_ID=u.ID"
 	fmt.Println(comando)
-	query, err := db.Query("SELECT Texto, Foto_ID FROM Comentario")
+	query, err := db.Query("SELECT Texto, Foto_ID, Foto_Usuario_ID, Username FROM Comentario c INNER JOIN Usuario u ON c.Foto_Usuario_ID=u.ID")
 
 	if err != nil {
 		panic(err.Error())
@@ -191,7 +164,7 @@ func MostrarComentario() []model.RComentario {
 	for query.Next() {
 		var comentario = model.RComentario{}
 
-		err = query.Scan(&comentario.Texto, &comentario.IDFoto)
+		err = query.Scan(&comentario.Texto, &comentario.IDFoto, &comentario.IDUsuario, &comentario.Username)
 		if err != nil {
 			panic(err.Error())
 		}

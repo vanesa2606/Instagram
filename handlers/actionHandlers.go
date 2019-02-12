@@ -162,6 +162,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		} else {
 
 			// Coger id de la base de datos. ( Hay que hacer una peticion a la base de datos)
+
 			respuesta = true
 			setSession(user.Username, w)
 			fmt.Println("Login")
@@ -217,7 +218,7 @@ func Uploader(w http.ResponseWriter, r *http.Request) {
 	//Esta linea de aqui abajo me manda a la pagina principal donde están todas las fotos
 	http.Redirect(w, r, "/principal", 301)
 
-	//Datos de la base de datos
+	//Datos de la base de datos compara el username y le manda el id
 	id := client.ConsultaID(username)
 	fmt.Println(id)
 
@@ -305,13 +306,7 @@ func ListarComentario(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//Funcion para coger el username
-	//username := getUserName(r)
-	//Datos de la base de datos que comparar el id y me da el nombre de ese id
-	//username = client.ConsultaUsuario(username)
-	//fmt.Println("NombreUsuario: ", username)
-
-	//Cogemos los datos de la base de datos
+	//Cogemos los datos de la base de datos para listar todos los comentarios
 	lista := client.MostrarComentario()
 
 	//Con estas tres lineas lo convierte a json para enviarlo al cliente

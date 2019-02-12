@@ -1,6 +1,6 @@
 $(document).ready(function() {
     console.log("Bienvenido a Instagram");
-    var formularioRegistro = $("#formularioRegistro > input:last-child");
+    var formularioRegistro = $("#formularioRegistro > #registro");
     console.log(formularioRegistro);
 
     //La linea de abajo es para saber si me ha iniciado sesión y me ha creado una cookie
@@ -36,10 +36,7 @@ $(document).ready(function() {
 
 
         }).done(function(data) {
-            console.log("Petición realizada");
-            $('#index > #botones > h1').html('Su petición ha sido registrada con éxito!!!');
-
-        
+            console.log("Petición realizada");     
         }).fail(function(data) {
             console.log("Petición fallida");
         
@@ -50,7 +47,7 @@ $(document).ready(function() {
 
 
     // Ajax para el login
-    var formularioConectate = $("#formularioConectate > input:last-child");
+    var formularioConectate = $("#formularioConectate > input:last-child, #formularioRegistro > button");
     console.log(formularioConectate)
     $(formularioConectate).click(function() {
         var usernam = $("#usernamecone").val();
@@ -117,13 +114,12 @@ $(document).ready(function() {
     $('#publicaciones').on('click', '.btnEnviarCom', function() {
         console.log(this);
         var comentario = $(this).parent().find(".txtComentario").val();
-        var id = $(this).parent().parent().parent().find(".txtId").val();
+        var id = $(this).siblings(".txtId").val();
         console.log(comentario, id);
         var envio = {
             texto: comentario,
             id: id
         };
-
         $.post({
             url:"/comentario",
             data: JSON.stringify(envio),
@@ -175,16 +171,16 @@ function Fotos(array) {
 
             for(var x = 0; x < array.length; x++) {
                 tbody.append(
-                    "<input type='hidden' class='txtId' value="+array[x].ID+">"+
                     "<div class='card'>"+
-                        "<img src='/files/"+array[x].URL+"' width='30%'>"+
+                        "<input type='hidden' class='txtId' value="+array[x].ID+">"+
+                        "<img src='/files/"+array[x].URL+"' width='95%'>"+
                         "<div class='container'>"+
                             "<h3>"+ array[x].Texto + "</h3>"+
                         "</div>"+
                         "<div class='comentarios'>"+
                         "</div>"+
-                            "<input type='comentario' class='txtComentario'>"+
-                            "<input type='button' class='btnEnviarCom' value='Enviar'>"+
+                        "<input type='comentario' class='txtComentario'>"+
+                        "<input type='button' class='btnEnviarCom' value='Enviar'>"+
                     "</div>");
                     // Llamo a la función de mostrar comentarios
 
@@ -217,7 +213,6 @@ function Fotos(array) {
 }
 
 function Comentario(array) {
-    var id = $("#publicaciones .txtId");
     var div = $("#publicaciones .comentarios");
     div.children().remove();
         if(array != null && array.length > 0) {
@@ -225,10 +220,11 @@ function Comentario(array) {
             for(var x = 0; x < array.length; x++) {
                 div.append(
                     "<input type='hidden' class='txtId' value="+array[x].ID+">"+
-                        "<div class='container'>"+
-                           // "<h6>"+ array[x].username + "</h6>"+
-                            "<p>"+ array[x].Texto + "</p>"+
-                        "</div>");
+                    "<div class='container'>"+
+                        "<h6>"+ array[x].Username + "</h6>"+
+                        "<p>"+ array[x].Texto + "</p>"+
+                        "<hr align='center' noshade='noshade' size='1' width='80%' />"+
+                    "</div>");
             }
         } else {
             tbody.append('<tr><td colspan="3">No hay publicaciones que mostar</td></tr>');
